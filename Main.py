@@ -19,4 +19,4 @@ pygame.display.set_mode((1280, 720))
 # create a title in the window, "TBD Typing Game"
 pygame.display.set_caption("TBD Typing Game")
 # create a surface
-print('hello')
+
