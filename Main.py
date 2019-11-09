@@ -12,10 +12,23 @@
 
 import pygame
 
-# initialize all pygame modules
-pygame.init()
-# set window of certain width and height
-pygame.display.set_mode((1280, 720))
-# create a title in the window, "TBD Typing Game"
-pygame.display.set_caption("TBD Typing Game")
-# create a surface
+
+def main():
+    # initialize all pygame modules
+    pygame.init()
+    # set window of certain width and height
+    pygame.display.set_mode((1280, 720))
+    # create a title in the window, "TBD Typing Game"
+    pygame.display.set_caption("TBD Typing Game")
+    # create a surface
+    a_surface = pygame.display.get_surface()
+    # create an object
+    game = Game(a_surface)
+
+
+class Game:
+
+    pass
+
+
+main()
