@@ -20,12 +20,13 @@ class Space:
         width, height = pygame.display.get_surface().get_size()
 
         if is_earth:
-            self.center = (width/2, height/2)
+            self.center = (int(width / 2), int(height / 2))
             self.radius = 100
-            self.velocity = (0,0)
+            self.velocity = (0, 0)
             self.color = pygame.Color("blue")
+
         else:
-            self.center = (random.randint(0, width), random.randint(0, height))
+            self.center = [random.randint(0, width), random.randint(0, height)]
             self.velocity = (random.randint(1, 10), random.randint(1, 10))
             self.radius = random.randint(20, 30)
             self.color = pygame.Color("orange")
