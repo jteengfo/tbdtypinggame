@@ -51,7 +51,7 @@ class Game:
         self.asteroid = Space(False, self.surface)
         self.asteroid2 = Space(False, self.surface)
         # player input objects
-        player_rect = ((320, 720-50, 960 , 50))
+        player_rect = ((320, 720-50, 640 , 50))
         self.rectangle = pygame.Rect(player_rect)
 
     def handle_events(self):
