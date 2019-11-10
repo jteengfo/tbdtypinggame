@@ -5,7 +5,7 @@ class Word:
 
     def __init__(self):
         # get surface dimensions
-        pass
+
 
     def set_content(self):
         pass

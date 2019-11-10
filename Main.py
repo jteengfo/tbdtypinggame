@@ -29,9 +29,8 @@ def main():
     a_surface = pygame.display.get_surface()
     # create an object
     game = Game(a_surface)
-    #
+    #main
     game.play()
-
 
 class Game:
 
@@ -51,8 +50,10 @@ class Game:
         self.asteroid = Space(False, self.surface)
         self.asteroid2 = Space(False, self.surface)
         # player input objects
-        player_rect = ((320, 720-50, 640 , 50))
-        self.rectangle = pygame.Rect(player_rect)
+        player_rect_white = (320, 720 - 50, 640, 50)
+        player_rect_black = (325, 720 - 45, 630, 40)
+        self.rectangle_white = pygame.Rect(player_rect_white)
+        self.rectangle_black = pygame.Rect(player_rect_black)
 
     def handle_events(self):
         # method that handles event by user that changes the state of the game
@@ -101,9 +102,12 @@ class Game:
 
     def draw_input_rectangle(self):
         # this method draws a rectangle at the bottom of the screen
-        pygame.draw.rect(self.surface, (255, 255, 255), self.rectangle)
+        pygame.draw.rect(self.surface, pygame.Color('white'), self.rectangle_white)
+        pygame.draw.rect(self.surface, pygame.Color('black'),self.rectangle_black)
 
-
+    def draw_input_chat(self):
+        # this method draws the
+        pass
 # class Space:
 #     def __init__(self, is_earth, surface):
 #
