@@ -36,7 +36,6 @@ def main():
 class Game:
 
     def __init__(self, surface):
-
         # objects in the game
         self.close_clicked = False
         self.surface = surface
@@ -51,6 +50,9 @@ class Game:
         self.earth = Space(True, self.surface)
         self.asteroid = Space(False, self.surface)
         self.asteroid2 = Space(False, self.surface)
+        # player input objects
+        player_rect = ((320, 720-50, 960 , 50))
+        self.rectangle = pygame.Rect(player_rect)
 
     def handle_events(self):
         # method that handles event by user that changes the state of the game
@@ -67,6 +69,7 @@ class Game:
             # play frame
             self.handle_events()
             self.draw()
+            self.draw_input_rectangle()
             if self.continue_game:
                 if not self.decide_continue():
                     self.continue_game = False
@@ -80,6 +83,11 @@ class Game:
         self.asteroid2.move()
         pygame.display.update()
 
+        if self.asteroid.is_collide(self.earth):
+            self.asteroid = Space(False, self.surface)
+        if self.asteroid2.is_collide(self.earth):
+            self.asteroid2 = Space(False, self.surface)
+
     def draw(self):
         # draws all objects
         # self is the game whose objects will be drawn
@@ -90,6 +98,10 @@ class Game:
 
     def decide_continue(self):
         return True
+
+    def draw_input_rectangle(self):
+        # this method draws a rectangle at the bottom of the screen
+        pygame.draw.rect(self.surface, (255, 255, 255), self.rectangle)
 
 
 # class Space:
@@ -131,30 +143,30 @@ class Game:
 #         pygame.draw.circle(self.surface, self.color, self.center, self.radius)
 
 
-class Word:
-
-    def __init__(self):
-
-        # opens and reads words txt file
-        # self is the Word whose words txt is open, read, and listed in a list
-        words_txt = open('words.txt', 'r')  # opens the txt file
-        words_list_content = words_txt.readlines()  # reads all words and creates list of strings
-        for i in range(len(words_list_content)):  # for each element in the list
-            words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
-        words_list_content.close()
-
-        # set content
-        chosen_word = random.choice(words_list_content)
-        print(chosen_word)
-
-    def choose_word(self):
-        pass
-
-    def draw(self):
-        pass
-
-    def move(self):
-        pass
+# class Word:
+#
+#     def __init__(self):
+#
+#         # opens and reads words txt file
+#         # self is the Word whose words txt is open, read, and listed in a list
+#         words_txt = open('words.txt', 'r')  # opens the txt file
+#         words_list_content = words_txt.readlines()  # reads all words and creates list of strings
+#         for i in range(len(words_list_content)):  # for each element in the list
+#             words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
+#         words_list_content.close()
+#
+#         # set content
+#         chosen_word = random.choice(words_list_content)
+#         print(chosen_word)
+#
+#     def choose_word(self):
+#         pass
+#
+#     def draw(self):
+#         pass
+#
+#     def move(self):
+#         pass
 
 
 main()
