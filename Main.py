@@ -16,21 +16,75 @@ from objs.Space import *
 
 # import pygame
 # import random
-#
 
+import sys
 def main():
     # initialize all pygame modules
     pygame.init()
+    pygame.font.init()
     # set window of certain width and height
     pygame.display.set_mode((1280, 720))
     # create a title in the window, "TBD Typing Game"
     pygame.display.set_caption("TBD Typing Game")
     # create a surface
     a_surface = pygame.display.get_surface()
+    # create a main menu
+    main_menu = Title(a_surface)
     # create an object
     game = Game(a_surface)
-    #main
+    # main
+    main_menu.main_execute()
     game.play()
+
+
+class Title:
+
+    def __init__(self, surface):
+        # objects in the game
+        self.surface = surface
+        self.bg_color = pygame.Color('black')
+        # window dimension
+        self.title_width = self.surface.get_width()
+        self.title_height = self.surface.get_height()
+        # infinite loop break; transition to game parameters
+        self.main_menu_stay = True
+        self.close_clicked = False
+
+    def main_execute(self):
+        while self.main_menu_stay:
+            self.handle_events()
+            self.draw()
+
+            self.update()
+
+    def draw(self):
+        # this method draws the title screen
+        tbd_font = pygame.font.Font(None, 100)
+        tbd_img = tbd_font.render('TBD Typing Game', True, pygame.Color('white'))
+        tbd_pos = [self.title_width / 2 - tbd_img.get_width() / 2, self.title_height /2 + tbd_img.get_height() / 2]
+        self.surface.blit(tbd_img, tbd_pos)
+
+    def handle_events(self):
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    self.main_menu_stay = False
+
+    def update(self):
+        #
+        pygame.display.update()
+
+    # def tbd_move(self):
+    #     screen_width = self.surface.get_width()
+    #     screen_height = self.surface.get_height()
+    #     tbd_pos =
+    #     tbd_velocity = 4
+    #     if
+
 
 class Game:
 
@@ -126,7 +180,7 @@ class Game:
     def draw_input_rectangle(self):
         # this method draws a rectangle at the bottom of the screen
         pygame.draw.rect(self.surface, pygame.Color('white'), self.rectangle_white)
-        pygame.draw.rect(self.surface, pygame.Color('black'),self.rectangle_black)
+        pygame.draw.rect(self.surface, pygame.Color('black'), self.rectangle_black)
 
     def draw_input_chat(self):
         #
