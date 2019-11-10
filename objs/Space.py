@@ -24,10 +24,11 @@ class Space:
             self.radius = 20
             self.velocity = (0, 0)
             self.color = pygame.Color("blue")
-
+            self.word = ''
         else:
 
             self.radius = random.randint(20, 100)
+            self.word = get_random_word('words.txt')
 
             x_pos = 0
             y_pos = 0
@@ -57,16 +58,6 @@ class Space:
             list_of_colors = ["red", "orange", "green", "brown"]
             self.color = pygame.Color(random.choice(list_of_colors))
 
-        # opens and reads words txt file
-        # self is the Word whose words txt is open, read, and listed in a list
-        words_txt = open('words.txt', 'r')  # opens the txt file
-        words_list_content = words_txt.readlines()  # reads all words and creates list of strings
-        for i in range(len(words_list_content)):  # for each element in the list
-            words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
-        words_txt.close()
-        # set content; chosen word is the randomized word
-        chosen_word = random.choice(words_list_content)
-
     def move(self):
         # changes the locations of the space object by adding the
         # x and y speed values to the x and y coordinates of the center
@@ -78,6 +69,7 @@ class Space:
         # Draw the object on the surface
         # self is the space object
         pygame.draw.circle(self.surface, self.color, (int(self.center[0]), int(self.center[1])), self.radius)
+        self.draw_word()
 
     def is_collide(self, other):
         sum_of_radii = self.radius + other.radius
@@ -87,6 +79,30 @@ class Space:
 
         if c < sum_of_radii:
             return True
-        else:
-            return False
-        
+
+        return False
+
+    def draw_word(self):
+        # draws the word underneath the obstacle
+        # and has it follow the obstacle
+
+        font_color = pygame.Color('white')
+        font_bg = pygame.Color('black')
+        font = pygame.font.SysFont('arial', 14)
+        text_img = font.render(self.word, True, font_color, font_bg)
+        text_pos = (self.center[0] - self.radius, self.center[1] + (self.radius + 20))
+        self.surface.blit(text_img, text_pos)
+
+
+def get_random_word(filename):
+    # opens and reads words txt file
+    # - filename is the file being read from
+
+    words_txt = open(filename, 'r')  # opens the txt file
+    words_list_content = words_txt.readlines()  # reads all words and creates list of strings
+    for i in range(len(words_list_content)):  # for each element in the list
+        words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
+    words_txt.close()
+    # set content; chosen word is the randomized word
+    chosen_word = random.choice(words_list_content)
+    return chosen_word
