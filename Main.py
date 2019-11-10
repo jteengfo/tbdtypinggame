@@ -132,7 +132,7 @@ class Game:
                                 self.asteroids[i] = Space(False, self.surface)
                                 self.answers.append(self.asteroids[i].get_word())
                     else:
-                        print('try again you freaking tard')
+                        print('try again')
                     self.player_input = ''
                 elif event.key == pygame.K_BACKSPACE:
                     self.player_input = self.player_input[:-1]
