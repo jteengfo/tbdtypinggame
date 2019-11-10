@@ -32,7 +32,7 @@ class Space:
 
             x_pos = 0
             y_pos = 0
-            rand = random.randint(0,3)
+            rand = random.randint(0,2)
 
             # determines which side the ball comes from depending on a random int
             if rand == 0:
@@ -44,9 +44,6 @@ class Space:
             elif rand == 2:
                 x_pos = random.randint(-self.radius, width + self.radius)
                 y_pos = -self.radius
-            else:
-                x_pos = random.randint(-self.radius, width + self.radius)
-                y_pos = height + self.radius
 
             self.center = [x_pos, y_pos]
 
@@ -93,6 +90,8 @@ class Space:
         text_pos = (self.center[0] - self.radius, self.center[1] + (self.radius + 20))
         self.surface.blit(text_img, text_pos)
 
+    def get_word(self):
+        return self.word
 
 def get_random_word(filename):
     # opens and reads words txt file

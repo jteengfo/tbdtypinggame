@@ -104,12 +104,15 @@ class Game:
         self.earth = Space(True, self.surface)
         self.asteroids = []
         self.asteroids.append(Space(False, self.surface))
+        self.answers = []
+        self.answers.append(self.asteroids[0].get_word())
         # player input objects
         player_rect_white = (320, 720 - 50, 640, 50)
         player_rect_black = (325, 720 - 45, 630, 40)
         self.rectangle_white = pygame.Rect(player_rect_white)
         self.rectangle_black = pygame.Rect(player_rect_black)
         self.player_input = ""
+
 
     def handle_events(self):
         # method that handles event by user that changes the state of the game
@@ -118,11 +121,16 @@ class Game:
         for event in events:
             if event.type == pygame.QUIT:
                 self.close_clicked = True
-            answer = 'dog'
+
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
-                    if self.player_input == answer:
+                    if self.player_input in self.answers:
                         print(True)
+                        for i in range(len(self.asteroids)):
+                            if self.asteroids[i].get_word() == self.player_input:
+                                self.answers.remove(self.player_input)
+                                self.asteroids[i] = Space(False, self.surface)
+                                self.answers.append(self.asteroids[i].get_word())
                     else:
                         print('try again you freaking tard')
                     self.player_input = ''
@@ -157,11 +165,12 @@ class Game:
         for i in range(len(self.asteroids)):
             if self.asteroids[i].is_collide(self.earth):
                 self.asteroids[i] = Space(False, self.surface)
+                self.answers.append(self.asteroids[i].get_word())
                 self.counter += 1
                 self.check_new_asteroid()
 
     def check_new_asteroid(self):
-        if self.counter >= 3:
+        if self.counter % 3 == 0:
             self.asteroids.append(Space(False, self.surface))
             self.counter = 0
 
