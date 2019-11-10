@@ -13,11 +13,13 @@
 
 from objs.Space import *
 
-
 # import pygame
 # import random
 
 import sys
+import time
+
+
 def main():
     # initialize all pygame modules
     pygame.init()
@@ -49,20 +51,41 @@ class Title:
         # infinite loop break; transition to game parameters
         self.main_menu_stay = True
         self.close_clicked = False
+        # title parameters
+        self.tbd_font = pygame.font.Font(None, 100)
+        self.tbd_img = self.tbd_font.render('TBD Typing Game', True, pygame.Color('white'))
+        self.tbd_pos = [self.title_width / 2 - self.tbd_img.get_width() / 2,
+                        self.title_height + self.tbd_img.get_height() / 2]
+        # instruction parameters
+        self.ins_font = pygame.font.Font(None, 50)
+        self.ins_img = self.ins_font.render('Press Enter to start game', True, pygame.Color('white'))
+        self.ins_pos = [self.title_width / 2 - self.ins_img.get_width() / 2,
+                        self.title_height / 3 + self.ins_img.get_height() / 2]
 
     def main_execute(self):
         while self.main_menu_stay:
             self.handle_events()
-            self.draw()
+            self.draw_title()
+            self.tbd_move()
+
+            self.draw_instruction()
 
             self.update()
 
-    def draw(self):
+    def draw_title(self):
         # this method draws the title screen
-        tbd_font = pygame.font.Font(None, 100)
-        tbd_img = tbd_font.render('TBD Typing Game', True, pygame.Color('white'))
-        tbd_pos = [self.title_width / 2 - tbd_img.get_width() / 2, self.title_height /2 + tbd_img.get_height() / 2]
-        self.surface.blit(tbd_img, tbd_pos)
+
+        tbd_img = self.tbd_img
+        self.surface.fill((0, 0, 0))
+        self.surface.blit(tbd_img, self.tbd_pos)
+
+    def draw_instruction(self):
+        # this method draws the title screen
+
+        ins_img = self.ins_img
+        # self.surface.fill((0, 0, 0))
+
+        self.surface.blit(ins_img, self.ins_pos)
 
     def handle_events(self):
         events = pygame.event.get()
@@ -78,12 +101,14 @@ class Title:
         #
         pygame.display.update()
 
-    # def tbd_move(self):
-    #     screen_width = self.surface.get_width()
-    #     screen_height = self.surface.get_height()
-    #     tbd_pos =
-    #     tbd_velocity = 4
-    #     if
+    def tbd_move(self):
+        # screen_width = self.surface.get_width()
+        screen_height = self.surface.get_height()
+
+        tbd_velocity = 1 / 4
+
+        if self.tbd_pos[1] >= screen_height / 2:
+            self.tbd_pos[1] -= tbd_velocity
 
 
 class Game:
