@@ -35,6 +35,7 @@ def main():
 class Game:
 
     def __init__(self, surface):
+        self.counter = 0
         # objects in the game
         self.close_clicked = False
         self.surface = surface
@@ -47,8 +48,8 @@ class Game:
         self.game_Clock = pygame.time.Clock()
         # earth object
         self.earth = Space(True, self.surface)
-        self.asteroid = Space(False, self.surface)
-        self.asteroid2 = Space(False, self.surface)
+        self.asteroids = []
+        self.asteroids.append(Space(False, self.surface))
         # player input objects
         player_rect_white = (320, 720 - 50, 640, 50)
         player_rect_black = (325, 720 - 45, 630, 40)
@@ -80,22 +81,30 @@ class Game:
 
     def update(self):
 
-        self.asteroid.move()
-        self.asteroid2.move()
+        for i in range(len(self.asteroids)):
+            self.asteroids[i].move()
+
         pygame.display.update()
 
-        if self.asteroid.is_collide(self.earth):
-            self.asteroid = Space(False, self.surface)
-        if self.asteroid2.is_collide(self.earth):
-            self.asteroid2 = Space(False, self.surface)
+        for i in range(len(self.asteroids)):
+            if self.asteroids[i].is_collide(self.earth):
+                self.asteroids[i] = Space(False, self.surface)
+                self.counter += 1
+                self.check_new_asteroid()
+
+    def check_new_asteroid(self):
+        if self.counter >= 3:
+            self.asteroids.append(Space(False, self.surface))
+            self.counter = 0
 
     def draw(self):
         # draws all objects
         # self is the game whose objects will be drawn
         self.surface.fill(self.bg_color)
         self.earth.draw()
-        self.asteroid.draw()
-        self.asteroid2.draw()
+
+        for i in range(len(self.asteroids)):
+            self.asteroids[i].draw()
 
     def decide_continue(self):
         return True
