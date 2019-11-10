@@ -131,30 +131,30 @@ class Game:
 #         pygame.draw.circle(self.surface, self.color, self.center, self.radius)
 
 
-# class Word:
-#
-#     def __init__(self):
-#
-#         # opens and reads words txt file
-#         # self is the Word whose words txt is open, read, and listed in a list
-#         words_txt = open('words.txt', 'r')  # opens the txt file
-#         words_list_content = words_txt.readlines()  # reads all words and creates list of strings
-#         for i in range(len(words_list_content)):  # for each element in the list
-#             words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
-#         words_list_content.close()
-#
-#         # set content
-#         chosen_word = random.choice(words_list_content)
-#         print(chosen_word)
-#
-#     def choose_word(self):
-#         pass
-#
-#     def draw(self):
-#         pass
-#
-#     def move(self):
-#         pass
+class Word:
+
+    def __init__(self):
+
+        # opens and reads words txt file
+        # self is the Word whose words txt is open, read, and listed in a list
+        words_txt = open('words.txt', 'r')  # opens the txt file
+        words_list_content = words_txt.readlines()  # reads all words and creates list of strings
+        for i in range(len(words_list_content)):  # for each element in the list
+            words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
+        words_list_content.close()
+
+        # set content
+        chosen_word = random.choice(words_list_content)
+        print(chosen_word)
+
+    def choose_word(self):
+        pass
+
+    def draw(self):
+        pass
+
+    def move(self):
+        pass
 
 
 main()

@@ -57,6 +57,15 @@ class Space:
             list_of_colors = ["red", "orange", "green", "brown"]
             self.color = pygame.Color(random.choice(list_of_colors))
 
+        # opens and reads words txt file
+        # self is the Word whose words txt is open, read, and listed in a list
+        words_txt = open('words.txt', 'r')  # opens the txt file
+        words_list_content = words_txt.readlines()  # reads all words and creates list of strings
+        for i in range(len(words_list_content)):  # for each element in the list
+            words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
+        words_list_content.close()
+        # set content; chosen word is the randomized word
+        chosen_word = random.choice(words_list_content)
 
     def move(self):
         # changes the locations of the space object by adding the
