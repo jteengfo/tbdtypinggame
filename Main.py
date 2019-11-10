@@ -83,6 +83,11 @@ class Game:
         self.asteroid2.move()
         pygame.display.update()
 
+        if self.asteroid.is_collide(self.earth):
+            self.asteroid = Space(False, self.surface)
+        if self.asteroid2.is_collide(self.earth):
+            self.asteroid2 = Space(False, self.surface)
+
     def draw(self):
         # draws all objects
         # self is the game whose objects will be drawn
