@@ -1,44 +1,43 @@
-import pygame, random, math
-#1280x720
+# this class handles the movement and
+# the collision detection of space objects
 
-MIN_RADIUS = 10
-
-width = 1280
-height = 720
+import pygame
+import random
 
 
-class Object():
-    def __init__(self):
-        self.xPos = random.random() * width
-        self.yPos = height
+class Space:
+    def __init__(self, is_earth, surface):
 
-        self.xVel = (width/2 - self.xPos)/20
-        self.yVel = (height/2 - self.yPos)/20
+        # Initializes a space object.
+        # - self is the space object to initialize
+        # - center is the center of the object
+        # - radius is the radius of the dot
+        # - velocity is a list containing the x and y speed
+        # - surface is the window's pygame.surface object
 
-        self.radius = (random.random() + 1) * MIN_RADIUS
+        self.surface = surface
 
-        print((self.xPos - width/2) + (self.yPos - height/2))
-        print("x = " + str(self.yPos - height/2))
-        print("y = " + str(self.xPos - width/2))
+        width, height = pygame.display.get_surface().get_size()
 
-    def update(self):
-        self.xPos += self.xVel
-        self.yPos += self.yVel
+        if is_earth:
+            self.center = (width/2, height/2)
+            self.radius = 100
+            self.velocity = (0,0)
+            self.color = pygame.Color("blue")
+        else:
+            self.center = (random.randint(0, width), random.randint(0, height))
+            self.velocity = (random.randint(1, 10), random.randint(1, 10))
+            self.radius = random.randint(20, 30)
+            self.color = pygame.Color("orange")
 
+    def move(self):
+        # changes the locations of the space object by adding the
+        # x and y speed values to the x and y coordinates of the center
 
-def main():
-    asteroid = Object()
+        self.center[0] += self.velocity[0]
+        self.center[1] += self.velocity[1]
 
-    while(abs((asteroid.xPos - width/2)) + abs((asteroid.yPos - height/2)) > 10):
-        print(asteroid.xPos)
-        asteroid.update()
-
-    print("done")
-    print((asteroid.xPos - width/2) + (asteroid.yPos - height/2))
-    print("x = " + str(asteroid.yPos-height/2))
-    print("y = " + str(asteroid.xPos-width/2))
-
-    return 0
-
-
-main()
+    def draw(self):
+        # Draw the object on the surface
+        # self is the space object
+        pygame.draw.circle(self.surface, self.color, self.center, self.radius)
