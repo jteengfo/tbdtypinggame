@@ -55,6 +55,7 @@ class Game:
         player_rect_black = (325, 720 - 45, 630, 40)
         self.rectangle_white = pygame.Rect(player_rect_white)
         self.rectangle_black = pygame.Rect(player_rect_black)
+        self.player_input = ""
 
     def handle_events(self):
         # method that handles event by user that changes the state of the game
@@ -63,6 +64,18 @@ class Game:
         for event in events:
             if event.type == pygame.QUIT:
                 self.close_clicked = True
+            answer = 'dog'
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_RETURN:
+                    if self.player_input == answer:
+                        print(True)
+                    else:
+                        print('try again you freaking tard')
+                    self.player_input = ''
+                elif event.key == pygame.K_BACKSPACE:
+                    self.player_input = self.player_input[:-1]
+                else:
+                    self.player_input += event.unicode
 
     def play(self):
         # pygame.display.flip()
@@ -72,6 +85,7 @@ class Game:
             self.handle_events()
             self.draw()
             self.draw_input_rectangle()
+            self.draw_input_chat()
             if self.continue_game:
                 if not self.decide_continue():
                     self.continue_game = False
@@ -115,8 +129,13 @@ class Game:
         pygame.draw.rect(self.surface, pygame.Color('black'),self.rectangle_black)
 
     def draw_input_chat(self):
-        # this method draws the
-        pass
+        #
+        font = pygame.font.Font(None, 60)
+        player_input_image = font.render(self.player_input, True, pygame.Color('white'))
+        player_input_image_pos = (325, 720 - 45)
+        self.surface.blit(player_input_image, player_input_image_pos)
+
+
 # class Space:
 #     def __init__(self, is_earth, surface):
 #
