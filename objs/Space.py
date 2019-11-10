@@ -21,13 +21,13 @@ class Space:
 
         if is_earth:
             self.center = (int(width / 2), int(height / 2))
-            self.radius = 20
+            self.radius = 50
             self.velocity = (0, 0)
             self.color = pygame.Color("blue")
             self.word = ''
         else:
 
-            self.radius = random.randint(20, 100)
+            self.radius = random.randint(10, 35)
             self.word = get_random_word('words.txt')
 
             x_pos = 0
@@ -85,9 +85,9 @@ class Space:
 
         font_color = pygame.Color('white')
         font_bg = pygame.Color('black')
-        font = pygame.font.SysFont('arial', 14)
+        font = pygame.font.SysFont('arial', 22)
         text_img = font.render(self.word, True, font_color, font_bg)
-        text_pos = (self.center[0] - self.radius, self.center[1] + (self.radius + 20))
+        text_pos = (self.center[0] - self.radius - 20, self.center[1] + (self.radius + 20))
         self.surface.blit(text_img, text_pos)
 
     def get_word(self):
