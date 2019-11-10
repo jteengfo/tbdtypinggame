@@ -12,7 +12,6 @@
 
 import pygame
 
-
 def main():
     # initialize all pygame modules
     pygame.init()
@@ -50,8 +49,7 @@ class Game:
         pass
 
     def decide_continue(self):
-
-
+        pass
 
 
 main()
