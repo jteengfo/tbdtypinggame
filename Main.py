@@ -154,7 +154,7 @@ class Game:
         font_size = 50
         font = pygame.font.SysFont('arial', font_size)
         text_img = font.render('Score: ' + str(self.score), True, pygame.Color('white'), pygame.Color('black'))
-        text_img_pos = ((self.surface.get_width()/2) + 120, self.white_rect_pos[1] - font_size - 5)
+        text_img_pos = ((self.surface.get_width()/2) + 115, self.white_rect_pos[1] - font_size - 5)
         self.surface.blit(text_img, text_img_pos)
 
     def decide_continue(self):
@@ -169,7 +169,7 @@ class Game:
 
     def draw_health_bar(self):
         # this method draws a rectangle at the bottom of the screen
-        length_factor = 3 * self.health / 4 / self.max_health
+        length_factor = 5 * self.health / 8 / self.max_health
         health_bar = pygame.Rect(self.white_rect_pos[0], self.white_rect_pos[1] - 35, self.white_rect_size[0] * length_factor, self.white_rect_size[1] / 2)
         pygame.draw.rect(self.surface, pygame.Color('red'), health_bar)
 
