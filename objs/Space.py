@@ -63,7 +63,7 @@ class Space:
         words_list_content = words_txt.readlines()  # reads all words and creates list of strings
         for i in range(len(words_list_content)):  # for each element in the list
             words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
-        words_list_content.close()
+        words_txt.close()
         # set content; chosen word is the randomized word
         chosen_word = random.choice(words_list_content)
 

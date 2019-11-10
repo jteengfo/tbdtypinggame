@@ -7,7 +7,6 @@ class Word:
         # get surface dimensions
         pass
 
-
     def set_content(self):
         pass
 
@@ -16,8 +15,9 @@ class Word:
 
     def choose_word(self):
         pass
+
     def draw(self):
         pass
+
     def move(self):
         pass
-
