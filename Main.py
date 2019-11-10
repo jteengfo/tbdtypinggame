@@ -44,7 +44,8 @@ class Game:
         self.health = 10
         self.max_health = 10
 
-        self.counter = 0
+        self.score = 0
+
         # objects in the game
         self.close_clicked = False
         self.surface = surface
@@ -84,11 +85,14 @@ class Game:
 
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_RETURN:
+                    self.player_input = self.player_input.lower()
                     if self.player_input in self.answers:
                         print(True)
                         for i in range(len(self.asteroids)):
                             if self.asteroids[i].get_word() == self.player_input:
                                 self.answers.remove(self.player_input)
+                                self.update_score()
+                                self.add_obstacle()
                                 self.asteroids[i] = Space(False, self.surface)
                                 self.answers.append(self.asteroids[i].get_word())
                     else:
@@ -127,12 +131,13 @@ class Game:
                 self.asteroids[i] = Space(False, self.surface)
                 self.answers.append(self.asteroids[i].get_word())
                 self.health -= 1
-                self.check_new_asteroid()
 
-    def check_new_asteroid(self):
-        if self.counter % 3 == 0:
+    def add_obstacle(self):
+        if self.score > len(self.asteroids) * 20:
             self.asteroids.append(Space(False, self.surface))
-            self.counter = 0
+
+    def update_score(self):
+        self.score += len(self.player_input)
 
     def draw(self):
         # draws all objects
@@ -140,11 +145,21 @@ class Game:
         self.surface.fill(self.bg_color)
         self.earth.draw()
         self.draw_health_bar()
+        self.draw_score()
 
         for i in range(len(self.asteroids)):
             self.asteroids[i].draw()
 
+    def draw_score(self):
+        font_size = 50
+        font = pygame.font.SysFont('arial', font_size)
+        text_img = font.render('Score: ' + str(self.score), True, pygame.Color('white'), pygame.Color('black'))
+        text_img_pos = ((self.surface.get_width()/2) + 120, self.white_rect_pos[1] - font_size - 5)
+        self.surface.blit(text_img, text_img_pos)
+
     def decide_continue(self):
+        if self.health == 0:
+            return False
         return True
 
     def draw_input_rectangle(self):
@@ -155,7 +170,8 @@ class Game:
     def draw_health_bar(self):
         # this method draws a rectangle at the bottom of the screen
         length_factor = 3 * self.health / 4 / self.max_health
-        health_bar = pygame.Rect(self.white_rect_pos[0], self.white_rect_pos[1] - 50, self.white_rect_size[0] * length_factor, self.white_rect_size[1] / 2)
+        health_bar = pygame.Rect(self.white_rect_pos[0], self.white_rect_pos[1] - 35, self.white_rect_size[0] * length_factor, self.white_rect_size[1] / 2)
+        font_color = pygame.Color('black')
         pygame.draw.rect(self.surface, pygame.Color('red'), health_bar)
 
     def draw_input_chat(self):
