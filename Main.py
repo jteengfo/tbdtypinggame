@@ -171,7 +171,6 @@ class Game:
         # this method draws a rectangle at the bottom of the screen
         length_factor = 3 * self.health / 4 / self.max_health
         health_bar = pygame.Rect(self.white_rect_pos[0], self.white_rect_pos[1] - 35, self.white_rect_size[0] * length_factor, self.white_rect_size[1] / 2)
-        font_color = pygame.Color('black')
         pygame.draw.rect(self.surface, pygame.Color('red'), health_bar)
 
     def draw_input_chat(self):
