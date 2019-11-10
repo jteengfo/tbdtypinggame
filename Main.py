@@ -122,7 +122,7 @@ class Endgame:
 class Game:
 
     def __init__(self, surface):
-        self.health = 3
+        self.health = 10
         self.max_health = 10
 
         self.score = 0
@@ -161,6 +161,7 @@ class Game:
     def handle_events(self):
         # method that handles event by user that changes the state of the game
         # self is the game whose events will be handled
+        transparent_green = (0, 255, 0, 100)
         events = pygame.event.get()
         for event in events:
             if event.type == pygame.QUIT:
@@ -174,8 +175,11 @@ class Game:
                         for i in range(len(self.asteroids)):
                             if self.asteroids[i].get_word() == self.player_input:
                                 self.answers.remove(self.player_input)
+
                                 self.update_score()
                                 self.add_obstacle()
+                                self.surface.fill(transparent_green)
+                                pygame.display.update()
                                 self.asteroids[i] = Space(False, self.surface)
                                 self.answers.append(self.asteroids[i].get_word())
                     else:
