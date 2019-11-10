@@ -21,15 +21,41 @@ class Space:
 
         if is_earth:
             self.center = (int(width / 2), int(height / 2))
-            self.radius = 100
+            self.radius = 20
             self.velocity = (0, 0)
             self.color = pygame.Color("blue")
 
         else:
-            self.center = [random.randint(0, width), random.randint(0, height)]
-            self.velocity = (random.randint(1, 10), random.randint(1, 10))
-            self.radius = random.randint(20, 30)
-            self.color = pygame.Color("orange")
+
+            self.radius = random.randint(20, 100)
+
+            x_pos = 0
+            y_pos = 0
+            rand = random.randint(0,3)
+
+            # determines which side the ball comes from depending on a random int
+            if rand == 0:
+                x_pos = -self.radius
+                y_pos = random.randint(-self.radius, height + self.radius)
+            elif rand == 1:
+                x_pos = width + self.radius
+                y_pos = random.randint(-self.radius, height + self.radius)
+            elif rand == 2:
+                x_pos = random.randint(-self.radius, width + self.radius)
+                y_pos = -self.radius
+            else:
+                x_pos = random.randint(-self.radius, width + self.radius)
+                y_pos = height + self.radius
+
+            self.center = [x_pos, y_pos]
+
+            # ensures the obstacles go towards the center of the screen
+            x_velocity = (width / 2 - self.center[0]) / 500
+            y_velocity = (height / 2 - self.center[1]) / 500
+            self.velocity = (x_velocity, y_velocity)
+
+            list_of_colors = ["red", "orange", "green", "brown"]
+            self.color = pygame.Color(random.choice(list_of_colors))
 
     def move(self):
         # changes the locations of the space object by adding the
@@ -41,4 +67,4 @@ class Space:
     def draw(self):
         # Draw the object on the surface
         # self is the space object
-        pygame.draw.circle(self.surface, self.color, self.center, self.radius)
+        pygame.draw.circle(self.surface, self.color, (int(self.center[0]), int(self.center[1])), self.radius)
