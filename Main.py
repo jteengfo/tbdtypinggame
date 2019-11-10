@@ -41,6 +41,9 @@ def main():
 class Game:
 
     def __init__(self, surface):
+        self.health = 10
+        self.max_health = 10
+
         self.counter = 0
         # objects in the game
         self.close_clicked = False
@@ -59,8 +62,14 @@ class Game:
         self.answers = []
         self.answers.append(self.asteroids[0].get_word())
         # player input objects
-        player_rect_white = (320, 720 - 50, 640, 50)
-        player_rect_black = (325, 720 - 45, 630, 40)
+        self.white_rect_pos = (320, 670)
+        self.white_rect_size = (640, 50)
+
+        self.black_rect_pos = (325, 675)
+        self.black_rect_size = (630, 40)
+
+        player_rect_white = (self.white_rect_pos[0], self.white_rect_pos[1], self.white_rect_size[0], self.white_rect_size[1])
+        player_rect_black = (self.black_rect_pos[0], self.black_rect_pos[1], self.black_rect_size[0], self.black_rect_size[1])
         self.rectangle_white = pygame.Rect(player_rect_white)
         self.rectangle_black = pygame.Rect(player_rect_black)
         self.player_input = ""
@@ -117,7 +126,7 @@ class Game:
             if self.asteroids[i].is_collide(self.earth):
                 self.asteroids[i] = Space(False, self.surface)
                 self.answers.append(self.asteroids[i].get_word())
-                self.counter += 1
+                self.health -= 1
                 self.check_new_asteroid()
 
     def check_new_asteroid(self):
@@ -130,6 +139,7 @@ class Game:
         # self is the game whose objects will be drawn
         self.surface.fill(self.bg_color)
         self.earth.draw()
+        self.draw_health_bar()
 
         for i in range(len(self.asteroids)):
             self.asteroids[i].draw()
@@ -141,6 +151,12 @@ class Game:
         # this method draws a rectangle at the bottom of the screen
         pygame.draw.rect(self.surface, pygame.Color('white'), self.rectangle_white)
         pygame.draw.rect(self.surface, pygame.Color('black'), self.rectangle_black)
+
+    def draw_health_bar(self):
+        # this method draws a rectangle at the bottom of the screen
+        length_factor = 3 * self.health / 4 / self.max_health
+        health_bar = pygame.Rect(self.white_rect_pos[0], self.white_rect_pos[1] - 50, self.white_rect_size[0] * length_factor, self.white_rect_size[1] / 2)
+        pygame.draw.rect(self.surface, pygame.Color('red'), health_bar)
 
     def draw_input_chat(self):
         #
