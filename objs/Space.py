@@ -31,6 +31,7 @@ class Space:
             self.radius = random.randint(20, 30)
             self.color = pygame.Color("orange")
 
+
     def move(self):
         # changes the locations of the space object by adding the
         # x and y speed values to the x and y coordinates of the center
