@@ -23,12 +23,35 @@ def main():
     # create a surface
     a_surface = pygame.display.get_surface()
     # create an object
-    game = Game(a_surface)
+    # game = Game(a_surface)
 
 
 class Game:
 
-    pass
+    def __init__(self):
+        # parameters to handle events
+        self.closed_clicked = False
+        self.continue_game = True
+
+    def handle_events(self):
+
+        events = pygame.event.get()
+        for event in events:
+            if event.type == pygame.QUIT:
+                self.closed_clicked = True
+
+    def play(self):
+        pass
+
+    def update(self):
+        pass
+
+    def draw(self):
+        pass
+
+    def decide_continue(self):
+
+
 
 
 main()
