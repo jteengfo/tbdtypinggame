@@ -12,12 +12,11 @@
 
 
 from objs.Space import *
+from objs.Title import *
+
 
 # import pygame
 # import random
-
-import sys
-import time
 
 
 def main():
@@ -37,78 +36,6 @@ def main():
     # main
     main_menu.main_execute()
     game.play()
-
-
-class Title:
-
-    def __init__(self, surface):
-        # objects in the game
-        self.surface = surface
-        self.bg_color = pygame.Color('black')
-        # window dimension
-        self.title_width = self.surface.get_width()
-        self.title_height = self.surface.get_height()
-        # infinite loop break; transition to game parameters
-        self.main_menu_stay = True
-        self.close_clicked = False
-        # title parameters
-        self.tbd_font = pygame.font.Font(None, 100)
-        self.tbd_img = self.tbd_font.render('TBD Typing Game', True, pygame.Color('white'))
-        self.tbd_pos = [self.title_width / 2 - self.tbd_img.get_width() / 2,
-                        self.title_height + self.tbd_img.get_height() / 2]
-        # instruction parameters
-        self.ins_font = pygame.font.Font(None, 50)
-        self.ins_img = self.ins_font.render('Press Enter to start game', True, pygame.Color('white'))
-        self.ins_pos = [self.title_width / 2 - self.ins_img.get_width() / 2,
-                        self.title_height / 3 + self.ins_img.get_height() / 2]
-
-    def main_execute(self):
-        while self.main_menu_stay:
-            self.handle_events()
-            self.draw_title()
-            self.tbd_move()
-
-            self.draw_instruction()
-
-            self.update()
-
-    def draw_title(self):
-        # this method draws the title screen
-
-        tbd_img = self.tbd_img
-        self.surface.fill((0, 0, 0))
-        self.surface.blit(tbd_img, self.tbd_pos)
-
-    def draw_instruction(self):
-        # this method draws the title screen
-
-        ins_img = self.ins_img
-        # self.surface.fill((0, 0, 0))
-
-        self.surface.blit(ins_img, self.ins_pos)
-
-    def handle_events(self):
-        events = pygame.event.get()
-        for event in events:
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_RETURN:
-                    self.main_menu_stay = False
-
-    def update(self):
-        #
-        pygame.display.update()
-
-    def tbd_move(self):
-        # screen_width = self.surface.get_width()
-        screen_height = self.surface.get_height()
-
-        tbd_velocity = 1 / 4
-
-        if self.tbd_pos[1] >= screen_height / 2:
-            self.tbd_pos[1] -= tbd_velocity
 
 
 class Game:
@@ -137,7 +64,6 @@ class Game:
         self.rectangle_white = pygame.Rect(player_rect_white)
         self.rectangle_black = pygame.Rect(player_rect_black)
         self.player_input = ""
-
 
     def handle_events(self):
         # method that handles event by user that changes the state of the game
@@ -222,71 +148,6 @@ class Game:
         player_input_image = font.render(self.player_input, True, pygame.Color('white'))
         player_input_image_pos = (325, 720 - 45)
         self.surface.blit(player_input_image, player_input_image_pos)
-
-
-# class Space:
-#     def __init__(self, is_earth, surface):
-#
-#         # Initializes a space object.
-#         # - self is the space object to initialize
-#         # - center is the center of the object
-#         # - radius is the radius of the dot
-#         # - velocity is a list containing the x and y speed
-#         # - surface is the window's pygame.surface object
-#
-#         self.surface = surface
-#
-#         width, height = pygame.display.get_surface().get_size()
-#
-#         if is_earth:
-#             self.center = (int(width / 2), int(height / 2))
-#             self.radius = 100
-#             self.velocity = (0, 0)
-#             self.color = pygame.Color("blue")
-#
-#         else:
-#             self.center = [random.randint(0, width), random.randint(0, height)]
-#             self.velocity = (random.randint(1, 10), random.randint(1, 10))
-#             self.radius = random.randint(20, 30)
-#             self.color = pygame.Color("orange")
-#
-#     def move(self):
-#         # changes the locations of the space object by adding the
-#         # x and y speed values to the x and y coordinates of the center
-#
-#         self.center[0] += self.velocity[0]
-#         self.center[1] += self.velocity[1]
-#
-#     def draw(self):
-#         # Draw the object on the surface
-#         # self is the space object
-#         pygame.draw.circle(self.surface, self.color, self.center, self.radius)
-
-
-# class Word:
-#
-#     def __init__(self):
-#
-#         # opens and reads words txt file
-#         # self is the Word whose words txt is open, read, and listed in a list
-#         words_txt = open('words.txt', 'r')  # opens the txt file
-#         words_list_content = words_txt.readlines()  # reads all words and creates list of strings
-#         for i in range(len(words_list_content)):  # for each element in the list
-#             words_list_content[i] = words_list_content[i].strip()  # removes all whitespace
-#         words_list_content.close()
-#
-#         # set content
-#         chosen_word = random.choice(words_list_content)
-#         print(chosen_word)
-#
-#     def choose_word(self):
-#         pass
-#
-#     def draw(self):
-#         pass
-#
-#     def move(self):
-#         pass
 
 
 main()
