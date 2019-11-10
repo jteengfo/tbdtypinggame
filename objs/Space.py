@@ -68,3 +68,15 @@ class Space:
         # Draw the object on the surface
         # self is the space object
         pygame.draw.circle(self.surface, self.color, (int(self.center[0]), int(self.center[1])), self.radius)
+
+    def is_collide(self, other):
+        sum_of_radii = self.radius + other.radius
+        a = self.center[0] - other.center[0]
+        b = self.center[1] - other.center[1]
+        c = (a**2 + b**2) ** 0.5
+
+        if c < sum_of_radii:
+            return True
+        else:
+            return False
+        
